@@ -1,14 +1,15 @@
-import { Link } from "react-router-dom";
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
 import clubLogo from "../assets/logo.png";
 
 const Navbar = () => {
     const navItems = [
         { name: "Home", path: "" },
-        { name: "Features", path: "features" },
-        { name: "About", path: "about" }
+        { name: "Chat", path: "chat" },
+        { name: "Songs", path: "songs" }
     ];
 
-    const path = window.location.pathname.slice(1);
+    const { pathname } = useLocation();
 
     return (
         <nav className="flex justify-between items-center p-4 bg-default-bg text-white">
@@ -20,7 +21,7 @@ const Navbar = () => {
                 {navItems.map(item => (
                     <li
                         key={item.name}
-                        className={`${path === item.path ? "text-default-green" : ""} hover:text-default-green transition-colors duration-300`}
+                        className={`${pathname === `/${item.path}` ? "text-default-green" : ""} hover:text-default-green transition-colors duration-300`}
                     >
                         <Link to={`/${item.path}`}>{item.name}</Link>
                     </li>

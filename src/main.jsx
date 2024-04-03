@@ -5,8 +5,8 @@ import "./main.css";
 import Layout from "./layout";
 import Home from "./pages/home";
 import ErrorPage from "./error-page";
-import Features from "./pages/features";
-import About from "./pages/about";
+import Chat from "./pages/chat";
+import Songs from "./pages/songs";
 
 const routes = [
     {
@@ -14,12 +14,12 @@ const routes = [
         element: <Home />
     },
     {
-        path: "/features",
-        element: <Features />
+        path: "/chat",
+        element: <Chat />
     },
     {
-        path: "/about",
-        element: <About />
+        path: "/songs",
+        element: <Songs />
     }
 ];
 
