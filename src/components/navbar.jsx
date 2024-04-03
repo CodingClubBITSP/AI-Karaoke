@@ -4,14 +4,14 @@ import clubLogo from "../assets/logo.png";
 const Navbar = () => {
     const navItems = [
         { name: "Home", path: "" },
-        { name: "Features", path: "features" },
+        { name: "Chat", path: "chat" },
         { name: "About", path: "about" }
     ];
 
     const path = window.location.pathname.slice(1);
 
     return (
-        <nav className="flex justify-between items-center p-4 bg-default-bg text-white">
+        <nav className="flex justify-between items-center p-4 bg-[url('./src/assets/bg-image.png')] text-white">
             <div className="flex items-center">
                 <img src={clubLogo} alt="Club Logo" className="w-12 h-12" />
                 <span className="text-2xl font-bold ml-2">Coding Club</span>
