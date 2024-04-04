@@ -1,9 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import "./question.css";
 import aiIcon from "../assets/ai.png";
 import axios from "axios";
+import { GlobalContext } from "../Contexts/GlobalContext";
+import { Link } from "react-router-dom";
 function Question() {
-    const [selectedCheckbox, setSelectedCheckbox] = useState(["", "", ""]);
+    const {
+        selectedCheckbox,
+        setSelectedCheckbox,
+        setSongs,
+        isValid,
+        setIsValid
+    } = useContext(GlobalContext);
     const questions = [
         {
             question: "Mood",
@@ -18,6 +26,9 @@ function Question() {
             options: ["Fast", "Mid-tempo", "Slow"]
         }
     ];
+    useEffect(() => {
+        setSelectedCheckbox(["", "", ""]);
+    }, []);
     const optionChangeHandler = e => {
         setSelectedCheckbox(prevState => {
             const prev = [...prevState];
@@ -25,49 +36,55 @@ function Question() {
             return prev;
         });
     };
-    // const sendData = () => {
-    //     fetch("https://ai-karaoke.onrender.com/training", {
-    //         method: "GET",
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         }
-    //     })
-    //         .then(response => console.log(response))
-    //         .catch(err => console.error(err));
-    // };
-    // fetch("https://ai-karaoke.onrender.com/training", {
-    //     method: "GET",
-    //     headers: {
-    //         "Content-Type": "application/json"
-    //     }
-    // })
-    //     .then(response => console.log(response))
-    //     .catch(err => console.error(err));
+    useEffect(() => {
+        for (let i = 0; i < 3; i++) {
+            if (selectedCheckbox[i] == "") {
+                setIsValid(false);
+                break;
+            } else {
+                setIsValid(true);
+            }
+        }
+        console.log(selectedCheckbox);
+    }, [selectedCheckbox]);
+    const submitHandler = () => {
+        // if(JSON.stringify(selectedCheckbox) != );
 
-    // useEffect(() => {
-    //     fetch("https://ai-karaoke.onrender.com/training")
-    //         .then(res => {
-    //             console.log(res);
-    //         })
-    //         .catch(err => console.log(err));
-    // }, []);
-    // useEffect(() => {
-    //     (async () => {
-    //         try {
-    //             const res = await axios.get(
-    //                 "https://ai-karaoke.onrender.com/training",
-    //                 {
-    //                     headers: {
-    //                         "Content-Type": "application/json"
-    //                     }
-    //                 }
-    //             );
-    //             console.log(res);
-    //         } catch (err) {
-    //             console.log(err);
-    //         }
-    //     })();
-    // }, []);
+        if (isValid) {
+            axios
+                .post(
+                    "https://ai-karaoke.onrender.com/prediction/",
+                    { data: selectedCheckbox },
+                    {
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    }
+                )
+                .then(res => {
+                    console.log(res.data.prediction);
+                    setSongs(res.data.prediction);
+                })
+                .catch(err => console.log(err));
+        }
+    };
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await axios.get(
+                    "https://ai-karaoke.onrender.com/training",
+                    {
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    }
+                );
+                console.log(res);
+            } catch (err) {
+                console.log(err);
+            }
+        })();
+    }, []);
     return (
         <>
             {questions.map((q, i) => {
@@ -97,12 +114,13 @@ function Question() {
                 );
             })}
             <div className="flex justify-center">
-                <button
-                    type="button"
-                    className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-fit"
+                <Link
+                    to="/karaoke"
+                    className={`${isValid ? "" : "pointer-events-none"} text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-fit`}
+                    onClick={submitHandler}
                 >
                     Proceed
-                </button>
+                </Link>
             </div>
         </>
     );

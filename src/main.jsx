@@ -11,10 +11,6 @@ import Karaoke from "./pages/karaoke";
 const routes = [
     {
         path: "/",
-        element: <Home />
-    },
-    {
-        path: "/chat",
         element: <Chat />
     },
     {
