@@ -1,3 +1,4 @@
+import React from "react";
 import Navbar from "./components/navbar";
 import "./styles/main.css";
 
@@ -7,8 +8,9 @@ const Layout = ({ children }) => {
             <header className="sticky top-0 z-10 ">
                 <Navbar />
             </header>
-            {children}
-        </main>
+            <main>{children}</main>
+            
+        </div>
     );
 };
 
