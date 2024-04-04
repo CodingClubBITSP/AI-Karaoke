@@ -3,7 +3,6 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./main.css";
 import Layout from "./layout";
-import Home from "./pages/home";
 import ErrorPage from "./error-page";
 import Chat from "./pages/chat";
 import Karaoke from "./pages/karaoke";
