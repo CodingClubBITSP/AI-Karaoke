@@ -6,7 +6,7 @@ import Layout from "./layout";
 import Home from "./pages/home";
 import ErrorPage from "./error-page";
 import Chat from "./pages/chat";
-import About from "./pages/about";
+import Karaoke from "./pages/karaoke";
 
 const routes = [
     {
@@ -18,8 +18,8 @@ const routes = [
         element: <Chat />
     },
     {
-        path: "/about",
-        element: <About />
+        path: "/karaoke",
+        element: <Karaoke />
     }
 ];
 

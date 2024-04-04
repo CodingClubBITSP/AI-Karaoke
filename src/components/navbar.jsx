@@ -5,7 +5,7 @@ const Navbar = () => {
     const navItems = [
         { name: "Home", path: "" },
         { name: "Chat", path: "chat" },
-        { name: "About", path: "about" }
+        { name: "Karaoke", path: "karaoke" }
     ];
 
     const path = window.location.pathname.slice(1);
