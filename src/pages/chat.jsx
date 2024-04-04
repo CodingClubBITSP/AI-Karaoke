@@ -1,27 +1,12 @@
-import React, { useEffect, useState } from "react";
-import "./chat.css";
-import submitIcon from "../assets/submit.svg";
+import "../styles/chat.css";
 import Question from "./question";
-const Chat = () => {
-    const [prompt, setPrompt] = useState("");
-    const promptChangeHandler = e => {
-        setPrompt(e.target.value);
-    };
 
+const Chat = () => {
     return (
         <div className="chat-container">
             <div className="question-box">
-                <Question></Question>
+                <Question />
             </div>
-            {/* <div className="prompt-box">
-                <input
-                    type="text"
-                    value={prompt}
-                    onChange={promptChangeHandler}
-                    className="prompt-input"
-                />
-                <img src={submitIcon} alt="Image" className="submit-img" />
-            </div> */}
         </div>
     );
 };

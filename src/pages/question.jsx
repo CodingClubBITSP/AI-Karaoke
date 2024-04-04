@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
-import "./question.css";
+import { useEffect, useState } from "react";
+import "../styles/question.css";
 import aiIcon from "../assets/ai.png";
 import axios from "axios";
-function Question() {
+
+const Question = () => {
     const [selectedCheckbox, setSelectedCheckbox] = useState(["", "", ""]);
+
     const questions = [
         {
             question: "Mood",
@@ -18,84 +20,56 @@ function Question() {
             options: ["Fast", "Mid-tempo", "Slow"]
         }
     ];
+
     const optionChangeHandler = e => {
+        const { name, value } = e.target;
         setSelectedCheckbox(prevState => {
             const prev = [...prevState];
-            prev[e.target.name] = e.target.value;
+            prev[name] = value;
             return prev;
         });
     };
-    // const sendData = () => {
-    //     fetch("https://ai-karaoke.onrender.com/training", {
-    //         method: "GET",
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         }
-    //     })
-    //         .then(response => console.log(response))
-    //         .catch(err => console.error(err));
-    // };
-    // fetch("https://ai-karaoke.onrender.com/training", {
-    //     method: "GET",
-    //     headers: {
-    //         "Content-Type": "application/json"
-    //     }
-    // })
-    //     .then(response => console.log(response))
-    //     .catch(err => console.error(err));
 
-    // useEffect(() => {
-    //     fetch("https://ai-karaoke.onrender.com/training")
-    //         .then(res => {
-    //             console.log(res);
-    //         })
-    //         .catch(err => console.log(err));
-    // }, []);
-    // useEffect(() => {
-    //     (async () => {
-    //         try {
-    //             const res = await axios.get(
-    //                 "https://ai-karaoke.onrender.com/training",
-    //                 {
-    //                     headers: {
-    //                         "Content-Type": "application/json"
-    //                     }
-    //                 }
-    //             );
-    //             console.log(res);
-    //         } catch (err) {
-    //             console.log(err);
-    //         }
-    //     })();
-    // }, []);
+    const fetchData = async url => {
+        try {
+            const response = await axios.get(url);
+            console.log(response);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        fetchData("https://ai-karaoke.onrender.com/training");
+    }, []);
+
+    const sendData = async () => {
+        await fetchData("https://ai-karaoke.onrender.com/training");
+    };
+
     return (
         <>
-            {questions.map((q, i) => {
-                return (
-                    <div className="container" key={i}>
-                        <div className="ai-icon">
-                            <img src={aiIcon} alt="Ai logo" />
-                        </div>
-                        <div className="question-container">
-                            <h2 className="question">{q.question}</h2>
-                            {q.options.map((option, j) => {
-                                return (
-                                    <div className="option">
-                                        <input
-                                            type="radio"
-                                            value={option}
-                                            onChange={optionChangeHandler}
-                                            name={i}
-                                            key={j}
-                                        />
-                                        <label htmlFor="">{option}</label>
-                                    </div>
-                                );
-                            })}
-                        </div>
+            {questions.map((q, i) => (
+                <div className="container" key={i}>
+                    <div className="ai-icon">
+                        <img src={aiIcon} alt="Ai logo" />
                     </div>
-                );
-            })}
+                    <div className="question-container">
+                        <h2 className="question">{q.question}</h2>
+                        {q.options.map((option, j) => (
+                            <div className="option" key={j}>
+                                <input
+                                    type="radio"
+                                    value={option}
+                                    onChange={optionChangeHandler}
+                                    name={i}
+                                />
+                                <label>{option}</label>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            ))}
             <div className="flex justify-center">
                 <button
                     type="button"
@@ -107,6 +81,6 @@ function Question() {
             </div>
         </>
     );
-}
+};
 
 export default Question;
