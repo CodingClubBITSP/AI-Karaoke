@@ -1,12 +1,13 @@
 import React from "react";
-import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "./main.css";
+import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./styles/main.css";
 import Layout from "./layout";
 import ErrorPage from "./error-page";
 import Chat from "./pages/chat";
 import Karaoke from "./pages/karaoke";
 
+<<<<<<< HEAD
 const routes = [
     {
         path: "/",
@@ -26,8 +27,19 @@ const router = createBrowserRouter(
     }))
 );
 
+=======
+>>>>>>> origin
 ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
-        <RouterProvider router={router} />
+        <Router>
+            <Layout>
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/chat" element={<Chat />} />
+                    <Route path="/karaoke" element={<Karaoke />} />
+                    <Route path="*" element={<ErrorPage />} />
+                </Routes>
+            </Layout>
+        </Router>
     </React.StrictMode>
 );
