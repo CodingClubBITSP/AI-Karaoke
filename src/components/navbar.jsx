@@ -16,10 +16,10 @@ const Navbar = () => {
             className="flex justify-between items-center p-4"
             style={{ backgroundImage: `url(${bgImage})`, color: "white" }}
         >
-            <div className="flex items-center">
+            <Link to="/" className="flex items-center">
                 <img src={clubLogo} alt="Club Logo" className="w-12 h-12" />
                 <span className="text-2xl font-bold ml-2">Coding Club</span>
-            </div>
+            </Link>
             <ul className="flex space-x-4">
                 {navItems.map(item => (
                     <li

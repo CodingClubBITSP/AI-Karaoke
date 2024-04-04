@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import "../styles/question.css";
 import aiIcon from "../assets/ai.png";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Question = () => {
+    const navigate = useNavigate();
     const [selectedCheckbox, setSelectedCheckbox] = useState(["", "", ""]);
 
     const questions = [
@@ -23,11 +25,23 @@ const Question = () => {
 
     const optionChangeHandler = e => {
         const { name, value } = e.target;
+
         setSelectedCheckbox(prevState => {
             const prev = [...prevState];
             prev[name] = value;
+
             return prev;
         });
+    };
+
+    const submitHandler = () => {
+        const data = {
+            mood: selectedCheckbox[0],
+            energy: selectedCheckbox[1],
+            beats: selectedCheckbox[2]
+        };
+
+        postData("https://ai-karaoke.onrender.com/training", data);
     };
 
     const fetchData = async url => {
@@ -39,13 +53,20 @@ const Question = () => {
         }
     };
 
+    const postData = async (url, data) => {
+        try {
+            const response = await axios.post(url, data);
+            console.log(response);
+
+            navigate("/karaoke");
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     useEffect(() => {
         fetchData("https://ai-karaoke.onrender.com/training");
     }, []);
-
-    const sendData = async () => {
-        await fetchData("https://ai-karaoke.onrender.com/training");
-    };
 
     return (
         <>
@@ -74,6 +95,7 @@ const Question = () => {
                 <button
                     type="button"
                     className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 w-fit"
+                    onClick={submitHandler}
                 >
                     Proceed
                 </button>
