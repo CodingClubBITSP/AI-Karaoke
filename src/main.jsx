@@ -1,24 +1,38 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./styles/main.css";
 import Layout from "./layout";
-import Home from "./pages/home";
-import ErrorPage from "./error-page";
+import Error from "./error";
 import Chat from "./pages/chat";
 import Karaoke from "./pages/karaoke";
+import { GlobalProvider } from "./context/GlobalContext";
 
-ReactDOM.createRoot(document.getElementById("root")).render(
+const rootElement = document.getElementById("root");
+
+const routes = [
+    {
+        path: "/",
+        element: <Chat />
+    },
+    {
+        path: "/karaoke",
+        element: <Karaoke />
+    }
+];
+
+const router = createBrowserRouter(
+    routes.map(route => ({
+        ...route,
+        element: <Layout>{route.element}</Layout>,
+        errorElement: <Error />
+    }))
+);
+
+ReactDOM.createRoot(rootElement).render(
     <React.StrictMode>
-        <Router>
-            <Layout>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/chat" element={<Chat />} />
-                    <Route path="/karaoke" element={<Karaoke />} />
-                    <Route path="*" element={<ErrorPage />} />
-                </Routes>
-            </Layout>
-        </Router>
+        <GlobalProvider>
+            <RouterProvider router={router} />
+        </GlobalProvider>
     </React.StrictMode>
 );

@@ -8,8 +8,7 @@ export default {
         extend: {
             colors: {
                 "default-bg": "#242424",
-                "default-green": "rgba(1, 154, 90, 1)",
-                "prompt-bg": "#313131"
+                "default-green": "rgba(1, 154, 90, 1)"
             },
             fontFamily: {
                 sans: ["Inter var", ...defaultTheme.fontFamily.sans]

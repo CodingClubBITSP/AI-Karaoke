@@ -4,8 +4,7 @@ import bgImage from "../assets/bg-image.png";
 
 const Navbar = () => {
     const navItems = [
-        { name: "Home", path: "" },
-        { name: "Chat", path: "chat" },
+        { name: "Chat", path: "" },
         { name: "Karaoke", path: "karaoke" }
     ];
 

@@ -1,0 +1,15 @@
+iframe {
+    text-align: center;
+    align-self: center;
+    align-items: center;
+    width: 80%;
+}
+
+.player {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin: 1rem 0 1.5rem 0;
+}
