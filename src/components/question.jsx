@@ -5,7 +5,7 @@ import { useGlobal } from "../context/GlobalContext";
 import aiIcon from "../assets/ai.png";
 import { useNavigate } from "react-router-dom";
 
-function Question() {
+const Question = () => {
     const navigate = useNavigate();
     const { selection, setSelection, setSongs } = useGlobal();
 
@@ -25,10 +25,10 @@ function Question() {
     ];
 
     useEffect(() => {
-        fetchData();
+        initAPI();
     }, []);
 
-    const fetchData = async () => {
+    const initAPI = async () => {
         try {
             const res = await axios.get(
                 "https://ai-karaoke.onrender.com/training",
@@ -113,6 +113,6 @@ function Question() {
             </div>
         </>
     );
-}
+};
 
 export default Question;

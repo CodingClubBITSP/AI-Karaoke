@@ -13,37 +13,20 @@ const useGlobal = () => {
 };
 
 const GlobalProvider = ({ children }) => {
-    const [selection, setSelection] = useState(["", "", ""]);
-    const [songs, setSongs] = useState([]);
-
-    useEffect(() => {
+    const [selection, setSelection] = useState(() => {
         const selectionFromStorage = localStorage.getItem("selection");
+        return selectionFromStorage
+            ? JSON.parse(selectionFromStorage)
+            : ["", "", ""];
+    });
+
+    const [songs, setSongs] = useState(() => {
         const songsFromStorage = localStorage.getItem("songs");
-
-        if (selectionFromStorage) {
-            try {
-                setSelection(JSON.parse(selectionFromStorage));
-            } catch (error) {
-                console.error(
-                    "Error parsing selection from local storage:",
-                    error
-                );
-            }
-        }
-
-        if (songsFromStorage) {
-            try {
-                setSongs(JSON.parse(songsFromStorage));
-            } catch (error) {
-                console.error("Error parsing songs from local storage:", error);
-            }
-        }
-    }, []);
+        return songsFromStorage ? JSON.parse(songsFromStorage) : [];
+    });
 
     useEffect(() => {
-        if (!selection.every(value => value !== "")) {
-            return;
-        }
+        if (!selection.every(value => value !== "")) return;
 
         try {
             localStorage.setItem("selection", JSON.stringify(selection));
@@ -53,9 +36,7 @@ const GlobalProvider = ({ children }) => {
     }, [selection]);
 
     useEffect(() => {
-        if (songs.length === 0) {
-            return;
-        }
+        if (songs.length === 0) return;
 
         try {
             localStorage.setItem("songs", JSON.stringify(songs));

@@ -1,17 +1,14 @@
-import "../styles/chat.css";
+import { useEffect } from "react";
 import Question from "../components/question";
 import title from "../assets/title.png";
 import { useGlobal } from "../context/GlobalContext";
-import { useEffect } from "react";
 
 const Chat = () => {
     const { setSelection } = useGlobal();
 
     useEffect(() => {
         setSelection(["", "", ""]);
-
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [setSelection]);
 
     return (
         <div className="chat-container">

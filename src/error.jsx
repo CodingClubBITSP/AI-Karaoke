@@ -1,8 +1,8 @@
-import { Link, useRouteError } from "react-router-dom";
+import { Link, useLocation, useRouteError } from "react-router-dom";
 
 const Error = () => {
     const error = useRouteError();
-    console.error(error);
+    const location = useLocation();
 
     return (
         <div
@@ -14,7 +14,7 @@ const Error = () => {
                 Sorry, an unexpected error has occurred.
             </p>
             <p className="italic text-gray-600 mb-2">
-                {error.statusText || error.message}
+                {error.message ?? `No route found for ${location.pathname}`}
             </p>
             <Link to="/" className="text-blue-500 hover:underline">
                 Go back to the home page

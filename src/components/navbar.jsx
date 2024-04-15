@@ -9,6 +9,10 @@ const Navbar = () => {
 
     const { pathname } = useLocation();
 
+    const isActive = path => {
+        return pathname === `/${path}`;
+    };
+
     return (
         <nav className="text-white flex justify-between items-center p-4">
             <Link to="/" className="flex items-center">
@@ -16,16 +20,26 @@ const Navbar = () => {
                 <span className="text-2xl font-bold ml-2">Coding Club</span>
             </Link>
             <ul className="flex space-x-4">
-                {navItems.map(item => (
-                    <li
-                        key={item.name}
-                        className={`${pathname === `/${item.path}` ? "text-default-green" : ""} hover:text-default-green transition-colors duration-300`}
-                    >
-                        <Link to={`/${item.path}`}>{item.name}</Link>
-                    </li>
+                {navItems.map((item, index) => (
+                    <NavItem
+                        key={index}
+                        path={item.path}
+                        name={item.name}
+                        isActive={isActive(item.path)}
+                    />
                 ))}
             </ul>
         </nav>
+    );
+};
+
+const NavItem = ({ path, name, isActive }) => {
+    return (
+        <li
+            className={`${isActive ? "text-default-green" : ""} hover:text-default-green transition-colors duration-300`}
+        >
+            <Link to={`/${path}`}>{name}</Link>
+        </li>
     );
 };
 
